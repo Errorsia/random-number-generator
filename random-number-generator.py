@@ -3,7 +3,7 @@
 # Author: Errorsia <Errorsia@outlook.com>
 # License: GPL v3
 
-# Version 4.0
+# Version 5.0
 
 import tkinter as tk
 from tkinter import messagebox
@@ -12,10 +12,15 @@ import ctypes
 
 
 # Show Easter Egg
-# Current condition: On (If Easter_Egg < 1, it's Off)
+# Current condition (Normally it's on. If Easter_Egg < 1, it's Off):
 EASTER_EGG = 1
 
 def clean_input_box():
+    """
+    清除输入框
+
+    同时管理彩蛋模块
+    """
     global EASTER_EGG
 
     entry1.delete("0", tk.END)
@@ -37,6 +42,11 @@ def clean_input_box():
 
 
 def generate():
+    """
+        生成随机数
+
+        由按钮触发
+    """
     get_entry1 = entry1.get()
     get_entry2 = entry2.get()
     get_entry3 = entry3.get()
@@ -173,16 +183,11 @@ def divide_string(input_string):
     """
 
     input_string = input_string.replace(' ', '').replace('\n', '').replace('\r', '')
-    string_tmp1 = ""
-    string_tmp2 = ""
+    string_tmp1 = input_string.replace(';', ',').replace('；', ',').replace('，', ',')
+
 
     list_characters = []
-
-    for i in input_string:
-        if i == ";" or i == "；" or i == "，":
-            string_tmp1 += ","
-        else:
-            string_tmp1 += i
+    string_tmp2 = ""
 
     if not string_tmp1[-1] == ",":
         string_tmp1 += ","
@@ -220,17 +225,17 @@ def generate_random_number(num1, num2, list_except_number):
 def generate_random_int(num1, num2, list_except_number):
     """生成一个a~b(做闭右闭, 从小到大排列)的随机整数, 保证生成的随机数不在list1中。
 
-      参数：
-        a：随机数的下界（包含）。
-        b：随机数的上界（包含）。
-        list1：一个从小到大排列的列表，其中包含了a~b之间的所有整数。
+          参数：
+                a：随机数的下界（包含）。
+                b：随机数的上界（包含）。
+                list1：一个从小到大排列的列表，其中包含了a~b之间的所有整数。
 
-      返回：
-        一个a~b的随机整数，不在list1中。
+          返回：
+                一个a~b的随机整数，不在list1中。
 
-      抛出：
-        ValueError：如果list1中包含了所有a~b之间的整数。
-      """
+          抛出：
+                ValueError：如果list1中包含了所有a~b之间的整数。
+    """
 
 
     if not num2 - num1 >= 10 ** 6:
