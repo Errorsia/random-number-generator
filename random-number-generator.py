@@ -3,17 +3,25 @@
 # Author: Errorsia <Errorsia@outlook.com>
 # License: GPL v3
 
-# Version 5.0
+# Version 6.0
 
 import tkinter as tk
 from tkinter import messagebox
 from random import *
-import ctypes
-
 
 # Show Easter Egg
-# Current condition (Normally it's on. If Easter_Egg < 1, it's Off):
+# Condition: (Normally it's on. If Easter_Egg < 1, it's Off)
 EASTER_EGG = 1
+
+
+def instructions():
+    instruction = (
+        "\n使用说明:\n\n本程序将会随机在输入的两个数之间(左闭右闭)寻找一个随机数\n\n"
+        "生成的随机数将不会是被排除的数(支持多个数, 用逗号或分号隔开)\n\n\n"
+        "Attention:\n\n请输入两个整数( -10^32 <= n <= 10^32)."
+    )
+    tk.messagebox.showinfo(title="Instructions", message=instruction)
+
 
 def clean_input_box():
     """
@@ -33,12 +41,11 @@ def clean_input_box():
         pass
     elif EASTER_EGG % 5 == 0:
         var.set("©2024 Arthur_xyz. All Rights Reserved")
-    elif EASTER_EGG % 11 == 0:
+    elif EASTER_EGG % 99 == 0:
         tk.messagebox.showinfo(title="Bonus", message="被你发现了ヾ(≧▽≦*)o!\n还真有人点了这么多下!")
         # \n算了给你一份文档吧
 
     EASTER_EGG += 1
-
 
 
 def generate():
@@ -74,8 +81,6 @@ def generate():
     if num1 > num2:
         num1, num2 = num2, num1
 
-
-
     exception_input_condition, list_except_number = handle_exception_input(get_entry3)
 
     if not exception_input_condition:
@@ -90,9 +95,7 @@ def generate():
     return
 
 
-
-def check_empty(get1,get2):
-
+def check_empty(get1, get2):
     if not get1 or not get2:
         # 输入框为空
         tk.messagebox.showerror(title="Error", message="输入框不能为空!")
@@ -102,12 +105,10 @@ def check_empty(get1,get2):
 
 
 def exceed_len_max(str1, str2, str3):
-
     if len(str1) + len(str2) > 77 or len(str3) > 100:
         tk.messagebox.showerror(title="Error", message="输入内容过长!")
         return True
     return False
-
 
 
 def is_integer(string):
@@ -129,10 +130,8 @@ def is_integer(string):
         return True
     # 如果转换失败，则书不是整数。
     except ValueError:
-        tk.messagebox.showerror(title="Error", message="请输入的整数!")
+        tk.messagebox.showerror(title="Error", message="请输入整数!")
         return False
-
-
 
 
 def handle_exception_input(exception_string):
@@ -156,7 +155,6 @@ def handle_exception_input(exception_string):
     if len(list_character) == 0:
         return True, []
 
-
     if any(is_integer(element_tmp2) == False for element_tmp2 in list_character):
         return False, []
 
@@ -168,7 +166,6 @@ def handle_exception_input(exception_string):
     # int_list_character = [int(k) for k in list_character]
 
     return True, int_list_character
-
 
 
 def divide_string(input_string):
@@ -183,33 +180,16 @@ def divide_string(input_string):
     """
 
     input_string = input_string.replace(' ', '').replace('\n', '').replace('\r', '')
-    string_tmp1 = input_string.replace(';', ',').replace('；', ',').replace('，', ',')
+    input_string = input_string.replace(';', ',').replace('；', ',').replace('，', ',')
 
-
-    list_characters = []
-    string_tmp2 = ""
-
-    if not string_tmp1[-1] == ",":
-        string_tmp1 += ","
-    # print(f"string_tmp1: {string_tmp1}")
-
-    for i in string_tmp1:
-        if i == ",":
-            list_characters.append(string_tmp2)
-            string_tmp2 = ""
-        else:
-            string_tmp2 += i
-        # print(f"list_characters:{list_characters}")
+    list_characters = input_string.split(',')
 
     list_characters = [element for element in list_characters if element != '']
-    # print(f 'list_characters:{list_characters}')
 
     return list_characters
 
 
-
 def generate_random_number(num1, num2, list_except_number):
-
     try:
         # 调用函数生成随机数
         random_int = generate_random_int(num1, num2, list_except_number)
@@ -237,7 +217,6 @@ def generate_random_int(num1, num2, list_except_number):
                 ValueError：如果list1中包含了所有a~b之间的整数。
     """
 
-
     if not num2 - num1 >= 10 ** 6:
         # 检查list1是否包含了所有num1~num2之间的整数
         if set(range(num1, num2 + 1)).issubset(set(list_except_number)):
@@ -254,64 +233,56 @@ def generate_random_int(num1, num2, list_except_number):
     return random_int
 
 
-
-
 # main window
 root = tk.Tk()
 root.title("随机数发生器")
 
 # Screen size
-user32 = ctypes.windll.user32
-screen_width = user32.GetSystemMetrics(0)
-screen_height = user32.GetSystemMetrics(1)
+# Tk.winfo_screenwidth
+screen_width = root.winfo_screenwidth()
+screen_height = root.winfo_screenheight()
 root.geometry(f"1280x720+{(screen_width - 1280) // 2}+{(screen_height - 720) // 2}")
 root.resizable(False, False)
 
 var = tk.StringVar()
 
 label100 = tk.Label(root, textvariable=var, font=("Arial", 50), height=3)
-label100.grid(row=0, column=0, columnspan=2)
+label100.grid(row=0, column=0, columnspan=12)
 
 label1 = tk.Label(root, text="请输入开始数字(包含):", font=("Arial", 30), width=26, height=1)
-label1.grid(row=1, column=0)
+label1.grid(row=1, column=0, columnspan=6)
 
 entry1 = tk.Entry(root, font=45, width=80)
-entry1.grid(row=1, column=1)
-
+entry1.grid(row=1, column=6, columnspan=6)
 
 label2 = tk.Label(root, text="请输入结束数字(包含):", font=("Arial", 30), width=26, height=1)
-label2.grid(row=2, column=0)
+label2.grid(row=2, column=0, columnspan=6)
 
 entry2 = tk.Entry(root, font=45, width=80)
-entry2.grid(row=2, column=1)
+entry2.grid(row=2, column=6, columnspan=6)
 
-
-label3 = tk.Label(root, text="请输入需要排除的数字(可不输入):", font=("Arial", 30), width=26, height=1)
-label3.grid(row=3, column=0)
+label3 = tk.Label(root, text="排除的数字(可留空):", font=("Arial", 30), width=26, height=1)
+label3.grid(row=3, column=0, columnspan=6)
 
 entry3 = tk.Entry(root, font=45, width=80)
-entry3.grid(row=3, column=1)
+entry3.grid(row=3, column=6, columnspan=6)
 
-
-label101_text1 = "\n使用说明:\n\n本程序将会随机在输入的两个数之间(左闭右闭)寻找一个随机数\n\n"
-label101_text2 = "生成的随机数将不会是被排除的数(支持多个数, 用逗号或分号隔开)\n\n\n"
-label101_text3 = "Attention:\n\n请输入两个整数( -10^32 <= n <= 10^32)."
-label101_text = label101_text1 + label101_text2 + label101_text3
+label101_text = ''
 label101 = tk.Label(root, text=label101_text, font=45, width=100, height=13)
-label101.grid(row=4, column=0, columnspan=2)
-
+label101.grid(row=4, column=0, columnspan=12)
 
 label102 = tk.Label(root, text="祝你好运\tGood Luck", font=("Arial", 20), width=50, height=2)
-label102.grid(row=5, column=0, columnspan=2)
+label102.grid(row=5, column=0, columnspan=12)
 
+button1 = tk.Button(root, bg="cyan", text="Start", font=30, width=40, height=2, command=generate)
+button1.grid(row=6, column=0, columnspan=4)
 
-button1 = tk.Button(root, bg="cyan", text="Start", font=30, width=50, height=2, command=generate)
-button1.grid(row=6, column=0)
+button2 = tk.Button(root, bg="cyan", text="一键清除", font=30, width=40, height=2, command=clean_input_box)
+button2.grid(row=6, column=4, columnspan=4)
 
-button2 = tk.Button(root, bg="cyan", text="一键清除", font=30, width=50, height=2, command=clean_input_box)
-button2.grid(row=6, column=1)
+button3 = tk.Button(root, bg="cyan", text="使用说明", font=30, width=40, height=2, command=instructions)
+button3.grid(row=6, column=8, columnspan=4)
 
 var.set("Please enter two integers🤓")
-
 
 root.mainloop()
