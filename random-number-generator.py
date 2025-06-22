@@ -3,15 +3,69 @@
 # Author: Errorsia <Errorsia@outlook.com>
 # License: GPL v3
 
-# Version 6.0
+# Version 7.0
+
+
+"""
+Update - En:
+1. Fixed some errors in the order of warning pop-ups and error prompts
+2. Changed some error comments
+
+Update - Zh-cn:
+1. 修复了部分警告弹窗和错误提示出现顺序的错误
+2. 更改了部分错误注释
+"""
 
 import tkinter as tk
 from tkinter import messagebox
 from random import *
+import os
 
 # Show Easter Egg
 # Condition: (Normally it's on. If Easter_Egg < 1, it's Off)
 EASTER_EGG = 1
+
+Times = 0
+
+
+def trick_input():
+    if os.path.isfile('./EnableSpecialInput.txt'):
+
+        with open('./EnableSpecialInput.txt', 'r') as trick_file:
+
+            first_line = trick_file.readline()
+            second_line = trick_file.readline()
+
+        # 去除换行符
+        first_line = first_line.rstrip()
+        second_line = second_line.strip()
+
+        # 检查是否为目标文件格式
+        if not first_line == '=====EnableSpecialInput=====':
+            return
+
+        second_line = second_line.replace('r', 'R')
+
+        trick_str_list = handle_trick_input(second_line)
+
+        return trick_str_list
+
+    else:
+        return None
+
+
+def handle_trick_input(line):
+    if not line:
+        # Length of exception_string is 0
+        return None
+
+    trick_input_str_list = divide_string(line)
+
+    # is_legal_trick_input
+    if any((tmp == 'R' or is_integer(tmp)) == False for tmp in trick_input_str_list):
+        return None
+
+    return trick_input_str_list
 
 
 def instructions():
@@ -40,7 +94,7 @@ def clean_input_box():
     if EASTER_EGG < 1:
         pass
     elif EASTER_EGG % 5 == 0:
-        var.set("©2024 Arthur_xyz. All Rights Reserved")
+        var.set("©2024 Errorsia. All Rights Reserved")
     elif EASTER_EGG % 99 == 0:
         tk.messagebox.showinfo(title="Bonus", message="被你发现了ヾ(≧▽≦*)o!\n还真有人点了这么多下!")
         # \n算了给你一份文档吧
@@ -54,12 +108,28 @@ def generate():
 
         由按钮触发
     """
+    global Times
+
+    Times += 1
+
     get_entry1 = entry1.get()
     get_entry2 = entry2.get()
     get_entry3 = entry3.get()
 
-    if check_empty(get_entry1, get_entry2):
+    # if check_empty(get_entry1, get_entry2):
+    #     var.set('ERROR')
+    #     return
+
+    if is_empty_string(get_entry1):
         var.set('ERROR')
+        # 输入框为空
+        tk.messagebox.showerror(title="Error", message="输入框不能为空!")
+        return
+
+    if is_empty_string(get_entry2):
+        var.set('ERROR')
+        # 输入框为空
+        tk.messagebox.showerror(title="Error", message="输入框不能为空!")
         return
 
     if exceed_len_max(get_entry1, get_entry2, get_entry3):
@@ -68,11 +138,13 @@ def generate():
 
     if not (is_integer(get_entry1) and is_integer(get_entry2)):
         var.set('ERROR')
+        tk.messagebox.showerror(title="Error", message="请输入整数!")
         return
 
     num1 = int(get_entry1)
     num2 = int(get_entry2)
 
+    # Check the range of numbers
     if abs(num1) > 10 ** 32 or abs(num2) > 10 ** 32:
         var.set('ERROR')
         tk.messagebox.showerror(title="Error", message="输入数字过大!")
@@ -88,6 +160,19 @@ def generate():
 
         return
 
+    if trick_input_list and Times <= len(trick_input_list):
+
+        current_trick_num = trick_input_list[Times - 1]
+
+        if not current_trick_num == 'R':
+
+            if num1 <= int(current_trick_num) <= num2 and not int(current_trick_num) in list_except_number:
+                random_number = current_trick_num
+
+                var.set(f"{random_number}")
+
+                return
+
     random_number = generate_random_number(num1, num2, list_except_number)
 
     var.set(f"{random_number}")
@@ -95,13 +180,23 @@ def generate():
     return
 
 
-def check_empty(get1, get2):
-    if not get1 or not get2:
-        # 输入框为空
-        tk.messagebox.showerror(title="Error", message="输入框不能为空!")
-        return True
-    else:
-        return False
+def is_empty_string(string):
+    """
+        判断字符串是否为空字符串
+
+        :param string: Any string
+        :return: True if string isn't empty string, False otherwise
+    """
+    return not bool(string)
+
+
+# def check_empty(get1, get2):
+#     if not get1 or not get2:
+#         # 输入框为空
+#         tk.messagebox.showerror(title="Error", message="输入框不能为空!")
+#         return True
+#     else:
+#         return False
 
 
 def exceed_len_max(str1, str2, str3):
@@ -114,8 +209,10 @@ def exceed_len_max(str1, str2, str3):
 def is_integer(string):
     """
         判断是否为整数
+        判断字符串内容是否为整数
 
         # 附: 之前写的代码有些复杂, 已经被放弃
+        # 之前使用的是遍历每一个字符, 判断是否合法
         # 现在换了一个思路, 十分简洁
 
         Args:
@@ -130,13 +227,13 @@ def is_integer(string):
         return True
     # 如果转换失败，则书不是整数。
     except ValueError:
-        tk.messagebox.showerror(title="Error", message="请输入整数!")
         return False
 
 
 def handle_exception_input(exception_string):
     """
-        处理输入异常
+        处理输入异常x
+        处理需要排除的数√
 
         Args:
             exception_string: 输入字符串
@@ -147,7 +244,6 @@ def handle_exception_input(exception_string):
 
     if not exception_string:
         # Length of exception_string is 0
-        # print('Length of exception_string is 0')
         return True, []
 
     list_character = divide_string(exception_string)
@@ -156,6 +252,7 @@ def handle_exception_input(exception_string):
         return True, []
 
     if any(is_integer(element_tmp2) == False for element_tmp2 in list_character):
+        tk.messagebox.showerror(title="Error", message="请输入整数!")
         return False, []
 
     # print("\nAll number is int:", end = '')
@@ -179,7 +276,7 @@ def divide_string(input_string):
             列表，包含分割后的字符串
     """
 
-    input_string = input_string.replace(' ', '').replace('\n', '').replace('\r', '')
+    input_string = input_string.replace(' ', '').replace('\n', '').replace('\r', '').replace('\t', '')
     input_string = input_string.replace(';', ',').replace('；', ',').replace('，', ',')
 
     list_characters = input_string.split(',')
@@ -217,10 +314,10 @@ def generate_random_int(num1, num2, list_except_number):
                 ValueError：如果list1中包含了所有a~b之间的整数。
     """
 
-    if not num2 - num1 >= 10 ** 6:
-        # 检查list1是否包含了所有num1~num2之间的整数
+    if not num2 - num1 >= 10 ** 5:
+        # 检查list_except_number是否包含了所有num1~num2之间的整数
         if set(range(num1, num2 + 1)).issubset(set(list_except_number)):
-            raise ValueError("list1包含了所有a~b之间的整数，无法生成不在list1中的随机数。")
+            raise ValueError("list_except_number包含了所有num1~num2之间的整数，无法生成不在list_except_number中的随机数")
 
     # 生成一个随机整数
     random_int = randint(num1, num2)
@@ -232,6 +329,8 @@ def generate_random_int(num1, num2, list_except_number):
     # 返回生成的随机数
     return random_int
 
+
+trick_input_list = trick_input()
 
 # main window
 root = tk.Tk()
