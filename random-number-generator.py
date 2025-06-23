@@ -3,17 +3,15 @@
 # Author: Errorsia <Errorsia@outlook.com>
 # License: GPL v3
 
-# Version 7.0
+# Version 7.1
 
 
 """
 Update - En:
-1. Fixed some errors in the order of warning pop-ups and error prompts
-2. Changed some error comments
+1. Changed some error comments
 
 Update - Zh-cn:
-1. 修复了部分警告弹窗和错误提示出现顺序的错误
-2. 更改了部分错误注释
+1. 更改了部分错误注释
 """
 
 import tkinter as tk
@@ -300,18 +298,19 @@ def generate_random_number(num1, num2, list_except_number):
 
 
 def generate_random_int(num1, num2, list_except_number):
-    """生成一个a~b(做闭右闭, 从小到大排列)的随机整数, 保证生成的随机数不在list1中。
+    """生成一个num1~num2(做闭右闭, 从小到大排列)的随机整数, 保证生成的随机数不在list_except_number中。
 
-          参数：
-                a：随机数的下界（包含）。
-                b：随机数的上界（包含）。
-                list1：一个从小到大排列的列表，其中包含了a~b之间的所有整数。
+          Args：
+                num1：随机数的下界（包含）。
+                num2：随机数的上界（包含）。
+                # list_except_number：一个从小到大排列的列表，其中包含了a~b之间的所有整数。x
+                list_except_number：一个列表，其中包含了a~b之间的所有整数。√
 
-          返回：
-                一个a~b的随机整数，不在list1中。
+          Returns：
+                一个num1~num2的随机整数，不在list_except_number中。
 
-          抛出：
-                ValueError：如果list1中包含了所有a~b之间的整数。
+          Raise：
+                ValueError：如果list_except_number中包含了所有num1~num2之间的整数。
     """
 
     if not num2 - num1 >= 10 ** 5:
