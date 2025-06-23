@@ -3,15 +3,17 @@
 # Author: Errorsia <Errorsia@outlook.com>
 # License: GPL v3
 
-# Version 7.1
+# Version 8.0
 
 
 """
 Update - En:
-1. Changed some error comments
+1. Fixed some errors in the order of warning pop-ups and error prompts
+2. Changed some error comments
 
 Update - Zh-cn:
-1. 更改了部分错误注释
+1. 修复了部分警告弹窗和错误提示出现顺序的错误
+2. 更改了部分错误注释
 """
 
 import tkinter as tk
@@ -27,6 +29,10 @@ Times = 0
 
 
 def trick_input():
+    """
+    用于处理
+    Return:
+    """
     if os.path.isfile('./EnableSpecialInput.txt'):
 
         with open('./EnableSpecialInput.txt', 'r') as trick_file:
@@ -44,9 +50,10 @@ def trick_input():
 
         second_line = second_line.replace('r', 'R')
 
-        trick_str_list = handle_trick_input(second_line)
-
-        return trick_str_list
+        # if not second_line:
+        #     # Length of exception_string is 0
+        #     return None
+        return handle_trick_input(second_line)
 
     else:
         return None
@@ -59,7 +66,7 @@ def handle_trick_input(line):
 
     trick_input_str_list = divide_string(line)
 
-    # is_legal_trick_input
+    # Is legal trick input
     if any((tmp == 'R' or is_integer(tmp)) == False for tmp in trick_input_str_list):
         return None
 
@@ -132,13 +139,25 @@ def generate():
 
     if exceed_len_max(get_entry1, get_entry2, get_entry3):
         var.set('ERROR')
+        tk.messagebox.showerror(title="Error", message="输入内容过长!")
         return
 
-    if not (is_integer(get_entry1) and is_integer(get_entry2)):
+    if not is_integer(get_entry1):
         var.set('ERROR')
         tk.messagebox.showerror(title="Error", message="请输入整数!")
         return
 
+    if not is_integer(get_entry2):
+        var.set('ERROR')
+        tk.messagebox.showerror(title="Error", message="请输入整数!")
+        return
+
+    """    
+    if not (is_integer(get_entry1) and is_integer(get_entry2)):
+    var.set('ERROR')
+    tk.messagebox.showerror(title="Error", message="请输入整数!")
+    return
+    """
     num1 = int(get_entry1)
     num2 = int(get_entry2)
 
@@ -155,7 +174,7 @@ def generate():
 
     if not exception_input_condition:
         var.set('ERROR')
-
+        tk.messagebox.showerror(title="Error", message="请输入整数!")
         return
 
     if trick_input_list and Times <= len(trick_input_list):
@@ -185,6 +204,15 @@ def is_empty_string(string):
         :param string: Any string
         :return: True if string isn't empty string, False otherwise
     """
+    """
+        判断字符串是否为空字符串
+
+        Args:
+            string: Any string
+
+        Return:
+            True if string isn't empty string, False otherwise
+    """
     return not bool(string)
 
 
@@ -198,10 +226,14 @@ def is_empty_string(string):
 
 
 def exceed_len_max(str1, str2, str3):
-    if len(str1) + len(str2) > 77 or len(str3) > 100:
-        tk.messagebox.showerror(title="Error", message="输入内容过长!")
-        return True
-    return False
+    """
+    检查字符串是否超出范围限制
+    :param str1: 输入框一
+    :param str2: 输入框二
+    :param str3: 输入框三(排除的数)
+    :return: True if input is out of range, False otherwise
+    """
+    return len(str1) + len(str2) > 77 or len(str3) > 100
 
 
 def is_integer(string):
@@ -250,7 +282,6 @@ def handle_exception_input(exception_string):
         return True, []
 
     if any(is_integer(element_tmp2) == False for element_tmp2 in list_character):
-        tk.messagebox.showerror(title="Error", message="请输入整数!")
         return False, []
 
     # print("\nAll number is int:", end = '')
@@ -298,19 +329,23 @@ def generate_random_number(num1, num2, list_except_number):
 
 
 def generate_random_int(num1, num2, list_except_number):
-    """生成一个num1~num2(做闭右闭, 从小到大排列)的随机整数, 保证生成的随机数不在list_except_number中。
+    """
+        生成一个num1~num2(做闭右闭, 从小到大排列)的随机整数, 保证生成的随机数不在list_except_number中。
 
-          Args：
-                num1：随机数的下界（包含）。
-                num2：随机数的上界（包含）。
-                # list_except_number：一个从小到大排列的列表，其中包含了a~b之间的所有整数。x
-                list_except_number：一个列表，其中包含了a~b之间的所有整数。√
+        Args：
+            num1：随机数的下界（包含）。
 
-          Returns：
-                一个num1~num2的随机整数，不在list_except_number中。
+            num2：随机数的上界（包含）。
 
-          Raise：
-                ValueError：如果list_except_number中包含了所有num1~num2之间的整数。
+            # list_except_number：一个从小到大排列的列表，其中包含了a~b之间的所有整数。x
+
+            list_except_number：一个列表，其中包含了a~b之间的所有整数。√
+
+        Returns：
+            一个num1~num2的随机整数，不在list_except_number中。
+
+        Raise：
+            ValueError：如果list_except_number中包含了所有num1~num2之间的整数。
     """
 
     if not num2 - num1 >= 10 ** 5:
@@ -336,7 +371,6 @@ root = tk.Tk()
 root.title("随机数发生器")
 
 # Screen size
-# Tk.winfo_screenwidth
 screen_width = root.winfo_screenwidth()
 screen_height = root.winfo_screenheight()
 root.geometry(f"1280x720+{(screen_width - 1280) // 2}+{(screen_height - 720) // 2}")
