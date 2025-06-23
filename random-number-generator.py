@@ -3,17 +3,15 @@
 # Author: Errorsia <Errorsia@outlook.com>
 # License: GPL v3
 
-# Version 8.0
+# Version 8.1
 
 
 """
 Update - En:
-1. Fixed some errors in the order of warning pop-ups and error prompts
-2. Changed some error comments
+1. Add and change wrong comments
 
 Update - Zh-cn:
-1. 修复了部分警告弹窗和错误提示出现顺序的错误
-2. 更改了部分错误注释
+1. 新增和修改了错误注释
 """
 
 import tkinter as tk
@@ -30,9 +28,11 @@ Times = 0
 
 def trick_input():
     """
-    用于处理
-    Return:
+    用于处理作弊输入
+
+    :returns: A list if there is a valid trick input, None otherwise
     """
+
     if os.path.isfile('./EnableSpecialInput.txt'):
 
         with open('./EnableSpecialInput.txt', 'r') as trick_file:
@@ -109,9 +109,10 @@ def clean_input_box():
 
 def generate():
     """
-        生成随机数
+    生成随机数
+    由按钮触发
 
-        由按钮触发
+    :return: None
     """
     global Times
 
@@ -120,10 +121,6 @@ def generate():
     get_entry1 = entry1.get()
     get_entry2 = entry2.get()
     get_entry3 = entry3.get()
-
-    # if check_empty(get_entry1, get_entry2):
-    #     var.set('ERROR')
-    #     return
 
     if is_empty_string(get_entry1):
         var.set('ERROR')
@@ -152,17 +149,11 @@ def generate():
         tk.messagebox.showerror(title="Error", message="请输入整数!")
         return
 
-    """    
-    if not (is_integer(get_entry1) and is_integer(get_entry2)):
-    var.set('ERROR')
-    tk.messagebox.showerror(title="Error", message="请输入整数!")
-    return
-    """
     num1 = int(get_entry1)
     num2 = int(get_entry2)
 
     # Check the range of numbers
-    if abs(num1) > 10 ** 32 or abs(num2) > 10 ** 32:
+    if out_of_range(num1) or out_of_range(num2):
         var.set('ERROR')
         tk.messagebox.showerror(title="Error", message="输入数字过大!")
         return
@@ -199,57 +190,52 @@ def generate():
 
 def is_empty_string(string):
     """
-        判断字符串是否为空字符串
+    判断字符串是否为空字符串
 
-        :param string: Any string
-        :return: True if string isn't empty string, False otherwise
+    :param string: Any string
+    :return: True if string isn't empty string, False otherwise
     """
-    """
-        判断字符串是否为空字符串
 
-        Args:
-            string: Any string
-
-        Return:
-            True if string isn't empty string, False otherwise
-    """
     return not bool(string)
-
-
-# def check_empty(get1, get2):
-#     if not get1 or not get2:
-#         # 输入框为空
-#         tk.messagebox.showerror(title="Error", message="输入框不能为空!")
-#         return True
-#     else:
-#         return False
 
 
 def exceed_len_max(str1, str2, str3):
     """
-    检查字符串是否超出范围限制
+    检查字符串是否超出长度限制
+
     :param str1: 输入框一
     :param str2: 输入框二
     :param str3: 输入框三(排除的数)
+    :return: True if input is too long, False otherwise
+    """
+
+    return len(str1) + len(str2) > 77 or len(str3) > 100
+
+
+def out_of_range(integer):
+    """
+    检查整数是否超出范围限制
+
+    :param integer: Any str
     :return: True if input is out of range, False otherwise
     """
-    return len(str1) + len(str2) > 77 or len(str3) > 100
+
+    return abs(integer) > 10 ** 32
 
 
 def is_integer(string):
     """
-        判断是否为整数
-        判断字符串内容是否为整数
+    判断是否为整数
+    判断字符串内容是否为整数
 
-        # 附: 之前写的代码有些复杂, 已经被放弃
-        # 之前使用的是遍历每一个字符, 判断是否合法
-        # 现在换了一个思路, 十分简洁
+    # 附: 之前写的代码有些复杂, 已经被放弃
 
-        Args:
-            string: 输入字符串
+    # 之前使用的是遍历每一个字符, 判断是否合法
 
-        Returns:
-            True if string is an integer, False otherwise
+    # 现在换了一个思路, 十分简洁
+
+    :param string: 输入字符串
+    :returns: True if string is an integer, False otherwise
     """
 
     try:
@@ -262,14 +248,11 @@ def is_integer(string):
 
 def handle_exception_input(exception_string):
     """
-        处理输入异常x
-        处理需要排除的数√
+    处理输入异常x
+    处理需要排除的数√
 
-        Args:
-            exception_string: 输入字符串
-
-        Returns:
-            True if input is valid, False otherwise
+    :param exception_string: 输入字符串
+    :returns: True if input is valid, False otherwise
     """
 
     if not exception_string:
@@ -296,13 +279,11 @@ def handle_exception_input(exception_string):
 
 def divide_string(input_string):
     """
-        分割字符串
+    处理字符
+    分割字符串
 
-        Args:
-            input_string: 输入字符串
-
-        Returns:
-            列表，包含分割后的字符串
+    :param input_string: 输入字符串
+    :returns: 列表，包含分割后的字符串
     """
 
     input_string = input_string.replace(' ', '').replace('\n', '').replace('\r', '').replace('\t', '')
@@ -316,6 +297,15 @@ def divide_string(input_string):
 
 
 def generate_random_number(num1, num2, list_except_number):
+    """
+    生成一个在num1~num2, 之间的随机数, 且不在list_except_number内
+
+    :param num1: 起始数(较小)
+    :param num2: 中止数(较大)
+    :param list_except_number: 被排除的数(不会被生成)
+    :return:
+    """
+
     try:
         # 调用函数生成随机数
         random_int = generate_random_int(num1, num2, list_except_number)
@@ -330,22 +320,13 @@ def generate_random_number(num1, num2, list_except_number):
 
 def generate_random_int(num1, num2, list_except_number):
     """
-        生成一个num1~num2(做闭右闭, 从小到大排列)的随机整数, 保证生成的随机数不在list_except_number中。
+    生成一个num1~num2(做闭右闭, 从小到大排列)的随机整数, 保证生成的随机数不在list_except_number中。
 
-        Args：
-            num1：随机数的下界（包含）。
-
-            num2：随机数的上界（包含）。
-
-            # list_except_number：一个从小到大排列的列表，其中包含了a~b之间的所有整数。x
-
-            list_except_number：一个列表，其中包含了a~b之间的所有整数。√
-
-        Returns：
-            一个num1~num2的随机整数，不在list_except_number中。
-
-        Raise：
-            ValueError：如果list_except_number中包含了所有num1~num2之间的整数。
+    :param num1: 随机数的下界（包含）。
+    :param num2: 随机数的上界（包含）。
+    :param list_except_number: 一个列表，其中包含了a~b之间的所有整数。
+    :returns: 一个num1~num2的随机整数，不在list_except_number中。
+    :raises ValueError: 如果list_except_number中包含了所有num1~num2之间的整数。
     """
 
     if not num2 - num1 >= 10 ** 5:
