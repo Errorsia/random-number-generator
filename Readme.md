@@ -17,13 +17,6 @@
 
 ---
 
-## ⚠️ Beta
-
-r10s是v10.0的一个简化测试版本, 不保证稳定, 无注释, 请慎重更新
-r10s版本以决定在v10.1更新后从仓库中删除
-
----
-
 ## 项目简介
 `Random Number Generator` 是一个基于 `Python` 和 `Tkinter` 的简单随机数发生器。用户可以输入范围，并指定需要排除的数字，程序会生成一个不在排除列表中的随机数。
 
@@ -57,9 +50,6 @@ pip install tkinter
 ```
 random-number-generator/
 │── random-number-generator-old.py  # v8.1主程序文件, 将于v12.0发布后删除
-│── r10s_main.py                    # v10.0简化测试版主程序文件, 将于v10.1发布后删除
-│── r10s_gui.py                     # v10.0简化测试版GUI模块, 将于v10.1发布后删除
-│── r10s_logic.py                   # v10.0简化测试版逻辑模块, 将于v10.1发布后删除
 │── rng_main.py                     # 新版本主程序文件
 │── rng_gui.py                      # 新版本GUI模块
 │── rng_logic.py                    # 新版本逻辑模块
