@@ -57,8 +57,8 @@ pip install tkinter
 random-number-generator/
 │── random-number-generator-old.py  # 老版本(v8.1)主程序文件, 将于v12.0发布后删除
 │── r10s_main.py                    # v10.0简化版主程序文件
-│── r10s_gui.py                     # v10.0简化版GUI文件
-│── r10s_logic.py                   # v10.0简化版GUI文件
+│── r10s_gui.py                     # v10.0简化版GUI模块
+│── r10s_logic.py                   # v10.0简化版逻辑模块
 │── EnableSpecialInput.txt          # 特殊输入选项(可选)
 │── README.md                       # 项目说明文档
 ```
