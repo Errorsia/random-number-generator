@@ -33,7 +33,7 @@ r10s是v10.0的一个简化测试版本, 不保证稳定, 无注释, 请慎重�
 - **Easter Egg**：内置隐藏彩蛋，增加趣味性。
 
 ## 使用方法
-1. **运行程序**：确保 Python 环境已安装，运行 `r10s_main.py.py`。
+1. **运行程序**：确保 Python 环境已安装，运行 `rng_main`。
 2. **输入范围**：
    - 在 **“请输入开始数字”** 和 **“请输入结束数字”** 两个输入框中填入两个整数。
 3. **排除特定数值**：
@@ -55,10 +55,13 @@ pip install tkinter
 
 ```
 random-number-generator/
-│── random-number-generator-old.py  # 老版本(v8.1)主程序文件, 将于v12.0发布后删除
-│── r10s_main.py                    # v10.0简化版主程序文件
-│── r10s_gui.py                     # v10.0简化版GUI模块
-│── r10s_logic.py                   # v10.0简化版逻辑模块
+│── random-number-generator-old.py  # v8.1主程序文件, 将于v12.0发布后删除
+│── r10s_main.py                    # v10.0简化测试版主程序文件, 将于v10.1发布后删除
+│── r10s_gui.py                     # v10.0简化测试版GUI模块, 将于v10.1发布后删除
+│── r10s_logic.py                   # v10.0简化测试版逻辑模块, 将于v10.1发布后删除
+│── rng_main.py                     # 新版本主程序文件
+│── rng_gui.py                      # 新版本GUI模块
+│── rng_logic.py                    # 新版本逻辑模块
 │── EnableSpecialInput.txt          # 特殊输入选项(可选)
 │── README.md                       # 项目说明文档
 ```
