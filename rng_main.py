@@ -3,7 +3,7 @@
 # Author: Errorsia <Errorsia@outlook.com>
 # License: GPL v3
 
-# Version 10.0
+# Version 10.1
 
 import tkinter as tk
 import rng_logic

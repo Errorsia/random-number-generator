@@ -9,19 +9,37 @@ from tkinter import messagebox
 
 class App:
     def __init__(self, root, logic_module):
+        """
+        初始化变量
+        拉起初始化窗口函数
+
+        :param root: 根窗口
+        :param logic_module: 逻辑模块
+        """
         self.logic = logic_module
         self.root = root
         self.var = tk.StringVar()
         self.entry1 = self.entry2 = self.entry3 = None
-        self.label_var = None
+        # self.label_var = None
+
         # 若 trick_input() 返回 None，则赋予空列表作为默认值，确保 trick_list 始终为列表类型
         self.trick_list = self.logic.trick_input() or []
+
+        # Show Easter Egg
+        # Condition: (Normally it's on. If Easter_Egg < 1, it's Off)
         self.EASTER_EGG = 1
+
+        # The number of times a random number is generated
         self.Times = 0
 
         self.setup_ui()
 
     def setup_ui(self):
+        """
+        初始化图形化界面
+
+        :return: None
+        """
         self.root.title("随机数发生器")
         screen_width = self.root.winfo_screenwidth()
         screen_height = self.root.winfo_screenheight()
@@ -49,6 +67,13 @@ class App:
         self.var.set("Please enter two integers🤓")
 
     def add_labeled_entry(self, text, row):
+        """
+        向窗口中添加label
+
+        :param text: 自定义label内容
+        :param row: 自定义label所出行(起始为0)
+        :return: None
+        """
         label = tk.Label(self.root, text=text, font=("Arial", 30), width=26)
         label.grid(row=row, column=0, columnspan=6)
 
@@ -72,11 +97,18 @@ class App:
         messagebox.showinfo(title="Instructions", message=msg)
 
     def clean_inputs(self):
+        """
+        清除输入框
+        同时管理彩蛋模块
+
+        :return: None
+        """
         self.entry1.delete(0, tk.END)
         self.entry2.delete(0, tk.END)
         self.entry3.delete(0, tk.END)
         self.var.set("Please enter two integers🤓")
 
+        # EASTER_EGG module
         if self.EASTER_EGG < 1:
             # EASTER_EGG is off
             pass
@@ -90,22 +122,16 @@ class App:
 
     def generate(self):
         """
-                生成随机数
+        生成随机数
+        由按钮触发
 
-                由按钮触发
+        :return: None
         """
         self.Times += 1
 
         get1 = self.entry1.get()
         get2 = self.entry2.get()
         get3 = self.entry3.get()
-
-        """
-        if self.logic.is_empty_string(get1) or self.logic.is_empty_string(get2):
-            self.var.set('ERROR')
-            messagebox.showerror("Error", "输入框不能为空!")
-            return
-        """
 
         if self.logic.is_empty_string(get1):
             self.var.set('ERROR')
