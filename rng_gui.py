@@ -77,7 +77,7 @@ class App:
         label = tk.Label(self.root, text=text, font=("Arial", 30), width=26)
         label.grid(row=row, column=0, columnspan=6)
 
-        entry = tk.Entry(self.root, font=45, width=80)
+        entry = tk.Entry(self.root, font=45, width=70)
         entry.grid(row=row, column=6, columnspan=6)
 
         if row == 1:
