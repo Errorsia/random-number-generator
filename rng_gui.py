@@ -29,7 +29,7 @@ class App:
         # Condition: (Normally it's on. If Easter_Egg < 1, it's Off)
         self.EASTER_EGG = 1
 
-        # The number of times a random number is generated
+        # The number of times the random number is generated
         self.Times = 0
 
         self.setup_ui()
