@@ -21,7 +21,6 @@ def trick_input():
     if not os.path.isfile('./EnableSpecialInput.txt'):
         return
 
-    # print(os.path.getsize('./EnableSpecialInput.txt'))
     # 防止文件过大, 加载时间过长
     if os.path.getsize('./EnableSpecialInput.txt') > 5000:
         return
