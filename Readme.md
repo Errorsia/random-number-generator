@@ -33,12 +33,11 @@ pip install tkinter
 
 ```
 random-number-generator/
-│── random-number-generator-old.py  # v8.1主程序文件, 将于v12.0发布后删除
 │── rng_main.py                     # 新版本主程序文件
 │── rng_gui.py                      # 新版本GUI模块
 │── rng_logic.py                    # 新版本逻辑模块
-│── EnableSpecialInput.txt          # 特殊输入选项(可选)
 │── README.md                       # 项目说明文档
+│── EnableSpecialInput.txt          # 特殊输入选项(可选)
 ```
 
 ## 贡献
