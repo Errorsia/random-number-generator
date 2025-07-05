@@ -20,7 +20,6 @@ class App:
         self.root = root
         self.var = tk.StringVar()
         self.entry1 = self.entry2 = self.entry3 = None
-        # self.label_var = None
 
         # 若 trick_input() 返回 None，则赋予空列表作为默认值，确保 trick_list 始终为列表类型
         self.trick_list = self.logic.trick_input() or []
