@@ -114,6 +114,12 @@ def out_of_range(integer):
 
 
 def divide_string(input_string):
+    """
+    处理并替换非法字符, 分割处理过的字符串到list
+
+    :param input_string: Any string
+    :return: A list, contains the result
+    """
     cleaned = input_string.replace(' ', '').replace('\n', '').replace('\r', '').replace('\t', '')
     cleaned = cleaned.replace(';', ',').replace('；', ',').replace('，', ',')
     return [s for s in cleaned.split(',') if s]
@@ -124,7 +130,7 @@ def handle_exception_input(exception_string):
     处理输入异常x
     处理需要排除的数√
 
-    :param exception_string: 输入字符串
+    :param exception_string: 输入字符串 Any string
     :returns: True if input is valid, False otherwise
     """
 
