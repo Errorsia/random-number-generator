@@ -70,7 +70,7 @@ class App:
         向窗口中添加label
 
         :param text: 自定义label内容
-        :param row: 自定义label所出行(起始为0)
+        :param row: 自定义label所在行(起始为0)
         :return: None
         """
         label = tk.Label(self.root, text=text, font=("Arial", 30), width=26)
