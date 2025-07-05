@@ -7,9 +7,6 @@ import os
 from random import randint
 
 
-# EASTER_EGG = 1
-# Times = 0
-
 def trick_input():
     """
     用于加载作弊输入
