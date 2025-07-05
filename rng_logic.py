@@ -58,11 +58,7 @@ def is_integer(string):
     判断是否为整数
     判断字符串内容是否为整数
 
-    # 附: 之前写的代码有些复杂, 已经被放弃
-
-    # 之前使用的是遍历每一个字符, 判断是否合法
-
-    # 现在换了一个思路, 十分简洁
+    # 附: 之前使用的是遍历每一个字符, 判断是否合法, 已经被放弃
 
     :param string: 输入字符串
     :returns: True if string is an integer, False otherwise
