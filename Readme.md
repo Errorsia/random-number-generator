@@ -1,16 +1,20 @@
 # Random Number Generator
+
 ---
 
 ## 项目简介
+
 `Random Number Generator` 是一个基于 `Python` 和 `Tkinter` 的简单随机数发生器。用户可以输入范围，并指定需要排除的数字，程序会生成一个不在排除列表中的随机数。
 
 ## 功能特色
+
 - **随机数生成**：输入两个整数作为范围，生成该范围内的随机数。
 - **排除指定数值**：支持多个需排除的数值，输入时可用逗号或分号隔开。
 - **界面友好**：基于 `Tkinter` 创建图形界面，简单直观。
 - **Easter Egg**：内置隐藏彩蛋，增加趣味性。
 
 ## 使用方法
+
 1. **运行程序**：确保 Python 环境已安装，运行 `rng_main.py`。
 2. **输入范围**：
    - 在 **“请输入开始数字”** 和 **“请输入结束数字”** 两个输入框中填入两个整数。
@@ -24,7 +28,9 @@
    - 点击 `使用说明` 按钮，获取详细使用指南。
 
 ## 安装依赖
+
 本项目基于 `Python 3.x` 运行，无需额外安装第三方库，仅使用标准库：
+
 ```bash
 pip install tkinter
 ```
@@ -36,7 +42,7 @@ random-number-generator/
 │── rng_main.py                     # 新版本主程序文件
 │── rng_gui.py                      # 新版本GUI模块
 │── rng_logic.py                    # 新版本逻辑模块
-│── README.md                       # 项目说明文档
+│── Readme.md                       # 项目说明文档
 │── EnableSpecialInput.txt          # 特殊输入选项(可选)
 ```
 
@@ -44,4 +50,4 @@ random-number-generator/
 
 欢迎提供建议或改进代码！如有问题，请联系作者。
 
-© 2025 Errorsia & Ariskanyaa. All Rights Reserved
+Copyright (C) 2025 Errorsia & Ariskanyaa
