@@ -90,9 +90,11 @@ class App:
     @staticmethod
     def instructions():
         msg = (
-            "\n使用说明:\n\n本程序将会随机在输入的两个数之间(左闭右闭)寻找一个随机数\n\n"
+            "\n使用说明:\n\n"
+            "本程序将会随机在输入的两个数之间(左闭右闭)寻找一个随机数\n\n"
             "生成的随机数将不会是被排除的数(支持多个数, 用逗号或分号隔开)\n\n\n"
-            "Attention:\n\n请输入两个整数( -10^32 <= n <= 10^32)."
+            "Attention:\n\n"
+            "请输入两个整数( -10^32 <= n <= 10^32)."
         )
         messagebox.showinfo(title="Instructions", message=msg)
 
